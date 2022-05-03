@@ -21,7 +21,7 @@ Money Claims Prototype
       <form method="post" action="defence-3" class="form">
         {% endif %}
         {{formData | safe}}
-       
+
       <h1 class="heading-large">Add your timeline of events </h1>
 
 
@@ -83,9 +83,17 @@ Money Claims Prototype
   </div>
   <div style="padding-top: 30px;"></div>
   <!-- ROC-5498 -->
+
+    <ul class="list">
+            <li> <a target="_blank"   href='#'>Download and view their Timeline</a> (PDF, 102 KB).</li>
+
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
   <h3 class="heading-small">Add your timeline of events (optional)</h3>
   <p>Include dates if you know them.</p>
-    
+
         <fieldset>
           <legend class="visuallyhidden">
             Explain what happened
@@ -94,59 +102,59 @@ Money Claims Prototype
 
         <thead>
             <tr class="govuk-table__row">
-          
+
               <th scope="col" class="govuk-table__header" aria-sort="ascending"> Date
-        
+
               <span class="form-hint">For example, March 2021 </span></th>
-            
+
               <th scope="col" class="govuk-table__header" aria-sort="none"> What happened
-        
+
               <span class="form-hint">For example, you might have signed a contract</span></th>
-            
+
               <th scope="col" class="govuk-table__header " aria-sort="none">Actions
                 <span class="form-hint"> </span>
 
               </th>
-             
+
             </tr>
-            
+
           </thead>
-            
+
           <tbody>
               <tr  id="tr_clone" class="  govuk-table__row">
-              
+
               <td style="padding-top:30px; padding-left:10px;" class=" govuk-table__cell "> <input  class=" form-control timeline-column-1" type="text" id="date-form-control"
                 name="cd-date-1" value="{{data['cd-date-1']}}" onfocus=>
                <br><br>
                 <button type="button" class="link" name="cmdDeleteRow">Remove</button>
                 </td>
-              
+
 
 
                 <td class="govuk-table__cell " data-sort-value="1568847600000"> <div style="padding-top:15px;" class="form-group"><textarea style="width: 90%; padding-top:15px;"
                   class="timeline-column-text" name="cd-timeline-1" id="timeline-1" value="{{data['cd-timeline-1']}}"
                   rows="2">{{data['cd-timeline-1']}}</textarea></div> </td>
-              
+
                 <td class="govuk-table__cell " data-sort-value="59">
                   <ol style="padding-top: 15px;">
-              
+
                     <li><button id="up" type="button" value="move up " class="link up">Move up</button></li>
-              
+
                     <br>
                     <li> <button id="down" type="button" value="move down " class="link down" >Move down</button></li>
                   </ol>
                 </td>
-              
+
               </tr>
             </tbody>
-          
-        
-            
-           
-            
 
-            </table> 
-         
+
+
+
+
+
+            </table>
+
             <button type="button" class=" addmore secondary-button" value="Insert above">Add new </button>
 
 
@@ -169,7 +177,7 @@ Money Claims Prototype
             </div>
           </div>
         </div>
-      
+
       {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
         <div class="form-group">
           <input type="submit" class="button" value="Save changes"/>
@@ -224,4 +232,3 @@ $("#sort").on("click",".up,.down", function () {
 {% include 'prototypes/prototype-oct-2019/includes/contact.html' %}
 </main>
 {% endblock %}
-
