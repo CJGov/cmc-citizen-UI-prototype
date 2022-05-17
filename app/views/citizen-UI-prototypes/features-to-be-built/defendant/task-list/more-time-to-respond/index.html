@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+Money Claims Prototype
+{% endblock %}
+{% block proposition_header %}
+{% set my_account="2" %}
+
+{% include "includes/propositional_navigation.html" %}
+{% endblock %}
+{% block content %}
+
+
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_beta.html" %}
+
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <a href="#" class="link-back">Back</a>
+
+      <h1 class="heading-large">
+        If you need more time to respond
+      </h1>
+      <h2 class="heading-medium">
+        Do you want to request more time to respond?
+      </h2>
+
+
+
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+      <form
+      name="aspnetForm"
+      method="post"
+      id="aspnetForm"
+      autocomplete="off"
+      onsubmit="multiNavigation('radio_select_group_time', ['Yes', 'No'], ['../more-time-to-respond/confirmation', '../more-time-to-respond']);return false;"
+      >
+
+      {% else %}
+      <form
+      name="aspnetForm"
+      method="post"
+      id="aspnetForm"
+      autocomplete="off"
+      onsubmit="multiNavigation('radio_select_group_time', ['Yes', 'No'], ['more-time-to-respond/confirmation', '../task-list']);return false;"
+      >
+      {% endif %}
+
+
+
+
+
+
+      <div class="form-group">
+        <fieldset>
+
+          <legend class="visually-hidden">Response deadline</legend>
+          <input type="hidden" name="more_time_to_respond" value="complete">
+
+
+          <div class="multiple-choice">
+            <input id="radio-yes1" type="radio" name="radio_select_group_time" value="Yes1">
+            <label for="radio-yes1" data-target="yes1-info">
+              <strong>Yes, I want to request more time</strong>
+
+            </label>
+          </div>
+
+          <div class="multiple-choice">
+            <input id="radio-yes" type="radio" name="radio_select_group_time" value="Yes">
+            <label for="radio-yes" data-target="yes-info">
+              <strong>I have already agreed more time with Jan Clark's Legal representative</strong>
+
+            </label>
+          </div>
+
+          <div class="multiple-choice">
+            <input id="radio-no" type="radio" name="radio_select_group_time" value="No">
+            <label for="radio-no" data-target="no-info">
+              <strong>No, I do not want to request respond</strong>
+              <p><font color="#808080">Respond before 4pm on {{ date | date('add', 19, 'days') | date }}</font></p>
+            </label>
+          </div>
+
+        </fieldset>
+        {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save changes"/>
+        </div>
+
+
+        <a href="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}">Cancel</a>
+
+        {% else %}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save and continue"/>
+        </div>
+
+        {% endif %}
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+
+</div>
+{% include 'prototypes/features-to-be-built/includes/contact.html' %}
+</main>
+{% endblock %}

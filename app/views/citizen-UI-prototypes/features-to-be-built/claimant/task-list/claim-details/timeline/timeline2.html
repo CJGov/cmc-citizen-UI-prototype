@@ -1,0 +1,164 @@
+{% extends "layout_task-list.html" %}
+{% block page_title %}
+Money Claims Prototype
+{% endblock %}
+{% block home_link %} ../../task-list {% endblock %}
+{% block proposition_header %}
+{% set my_account="1" %}
+
+{% include "includes/propositional_navigation.html" %}
+{% endblock %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #sortable tbody { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+  html>body #sortable tbody { height: 1.5em; line-height: 1.2em; }
+  .ui-state-highlight { background-color:#f3f2f1; height: 173px; line-height: 922px; }
+  </style>
+<main id="content" role="main">
+  {% include "includes/phase_banner_beta.html" %}
+  <div class="grid-row">
+    <div class="column-full-width">
+      <!--  <a href="#" onclick="history.go(-1)" class="link-back">Back</a>  -->
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+       <form method="post" action="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}" class="form">
+        {% else %}
+      <form method="post" action="../evidence/index" class="form">
+        {% endif %}
+        {{formData | safe}}
+        <h1 class="heading-large">
+          Timeline of events
+        </h1>
+
+        <p>If you do not know the exact date, tell us the month and year.</p>
+
+
+        <p class="bold-small">Example timeline</p>
+        <ul class="list list-bullet">
+          <li>21 March 2021 - I noticed a leak on the landing and told Mr Smith about this.</li>
+          <li>14 February 2021 - We agreed and signed a contract for the work.</li>
+          <li>12 January 2021 - John Smith gave me a quote to replace the roof.</li>
+
+        </ul>
+
+        <br>
+    
+        <fieldset>
+          <legend class="visuallyhidden">
+            Explain what happened
+          </legend>
+          <table id="sort" class="govuk-table">
+
+        
+            <tr class="govuk-table__row">
+       
+              <th scope="col" class="govuk-table__header" aria-sort="ascending"> Date
+        
+              <span class="form-hint">For example, March 2021 </span></th>
+            
+              <th scope="col" class="govuk-table__header" aria-sort="none"> What happened
+        
+              <span class="form-hint">For example, you might have signed a contract</span></th>
+            
+              <th scope="col" class="govuk-table__header " aria-sort="none">Actions
+                <span class="form-hint"> </span>
+
+              </th>
+             
+            </tr>
+            
+      
+            
+          <tbody id="sortable" class="ui-state-default">
+              <tr  id="tr_clone" class="  ui-state-default govuk-table__row">
+          
+              <td style="padding-top:30px; padding-left:10px;" class=" govuk-table__cell "> <input  class=" form-control timeline-column-1" type="text" id="date-form-control"
+                name="cd-date-1" value="{{data['cd-date-1']}}" onfocus=>
+               <br><br>
+                <button type="button" class="link" name="cmdDeleteRow">Remove</button>
+                </td>
+              
+
+<td class="govuk-table__cell " data-sort-value="1568847600000">
+  <div style="padding-top:15px;" class="form-group"><textarea style="width: 90%; padding-top:15px;"
+      class="timeline-column-text" name="cd-timeline-1" id="timeline-1" value="{{data['cd-timeline-1']}}"
+      rows="2">{{data['cd-timeline-1']}}</textarea></div>
+</td>
+              
+                <td class="govuk-table__cell " data-sort-value="59">
+                  <ol style="padding-top: 15px;">
+              
+                    <li><button type="button" class="link tr_clone_remove" value="Insert above">Add above</button></li>
+              
+                    <br>
+                    <li> <button type="button" class="link tr_clone_add" value="Insert below">Add below</button></li>
+                  </ol>
+                </td>
+              
+              </tr>
+            </tbody>
+          
+        
+            
+           
+            
+
+            </table> 
+          
+         
+
+        </fieldset>
+      
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save changes"/>
+        </div>
+        <a href="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}">Cancel</a>
+      {% else %}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save and continue"/>
+        </div>
+      {% endif %}
+      </form>
+    </div>
+  </div>
+  {% block page_scripts %}
+<script>
+
+
+$("button.tr_clone_add").on('click', function() {
+  $curRow = $(this).closest('tr');
+  $newRow = $curRow.clone(true).attr('value','');   
+  $curRow.after($newRow.addClass( "rowcolor" ), $curRow.removeClass( "rowcolor" ));
+
+});
+
+$("button.tr_clone_remove").on('click', function() {
+  $curRow = $(this).closest('tr');
+  $newRow = $curRow.clone(true).attr('value','');   
+  $curRow.before($newRow.addClass( "rowcolor" ), $curRow.removeClass( "rowcolor" ));
+});
+
+
+$('button[name="cmdDeleteRow"]').on('click', function(){
+$(this).closest('tr').remove()
+})
+
+
+
+$( function() {
+    $( "#sortable" ).sortable({
+      placeholder: "ui-state-highlight"
+    });
+    $( "#sortable" ).disableSelection();
+  } );
+  </script>
+
+{% endblock %}
+
+{% include 'prototypes/prototype-oct-2019/includes/contact.html' %}
+</main>
+{% endblock %}
+

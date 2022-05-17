@@ -1,0 +1,221 @@
+{% extends "layout_task-list.html" %}
+{% block page_title %}
+Money Claims Prototype
+{% endblock %}
+{% block home_link %} ../../task-list {% endblock %}
+{% block proposition_header %}
+{% set my_account="1" %}
+
+{% include "includes/propositional_navigation.html" %}
+{% endblock %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<main id="content" role="main">
+  {% include "includes/phase_banner_beta.html" %}
+  <div class="grid-row">
+    <div class="column-full-width">
+      <!--  <a href="#" onclick="history.go(-1)" class="link-back">Back</a>  -->
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+       <form method="post" action="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}" class="form">
+        {% else %}
+      <form method="post" action="../evidence/index"  class="form">
+        {% endif %}
+        {{formData | safe}}
+        <h1 class="heading-large">
+          Timeline of events
+        </h1>
+
+        <p>If you do not know the exact date, tell us the month and year.</p>
+
+
+        <p class="bold-small">Example timeline</p>
+        <ul class="list list-bullet">
+          <li>12 January 2021 - John Smith gave me a quote to replace the roof.</li>
+          <li>14 February 2021 - We agreed and signed a contract for the work.</li>
+          <li>21 March 2021 - I noticed a leak on the landing and told Mr Smith about this.</li>
+        
+
+        </ul>
+
+        <br>
+    
+        <fieldset>
+          <legend class="visuallyhidden">
+            Explain what happened
+          </legend>
+          <div id="error1" class="govuk-error-summary hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+        This cannot be moved up
+            </h2>
+          
+          </div>
+          <table id="sort" class="  govuk-table">
+
+        <thead>
+            <tr class="govuk-table__row">
+          
+              <th scope="col" class="govuk-table__header" aria-sort="ascending"> Date
+        
+              <span class="form-hint">For example, March 2021 </span></th>
+            
+              <th scope="col" class="govuk-table__header" aria-sort="none"> What happened
+        
+              <span class="form-hint">For example, you might have signed a contract</span></th>
+            
+              <th id="cell2" scope="col" class="govuk-table__header hidden " aria-sort="none">Actions
+                <span class="form-hint"> </span>
+
+              </th>
+             
+            </tr>
+            
+          </thead>
+            
+          <tbody id="sort2" >
+              <tr  id="tr_clone" class="   govuk-table__row">
+              
+              <td style="padding-top:30px; padding-left:10px;" class=" govuk-table__cell "> <input  class=" form-control timeline-column-1" type="text" id="date-form-control"
+                name="cd-date-1" value="{{data['cd-date-1']}}" onfocus=>
+               <br><br>
+                <button  type="button" class="rmv link hidden" name="cmdDeleteRow">Remove</button>
+                </td>
+              
+
+
+                <td class="govuk-table__cell " data-sort-value="1568847600000"> <div style="padding-top:15px;" class="form-group"><textarea style="width: 90%; padding-top:15px;"
+                  class="timeline-column-text" name="cd-timeline-1" id="timeline-1" value="{{data['cd-timeline-1']}}"
+                  rows="2">{{data['cd-timeline-1']}}</textarea></div> </td>
+              
+                <td id="cell1" class="govuk-table__cell hidden" data-sort-value="59">
+                  <ol style="padding-top: 15px;">
+              
+                    <li><button id="up" type="button" value="move up " class="link up">Move up</button></li>
+              
+                    <br>
+                    <li> <button id="down" type="button" value="move down " class="link down" >Move down</button></li>
+                  </ol>
+                </td>
+              
+              </tr>
+            </tbody>
+          
+        
+            
+           
+            
+
+            </table> 
+            <div id="error2" class="govuk-error-summary hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+              <h2 class="govuk-error-summary__title" id="error-summary-title">
+          This cannot be moved down
+              </h2>
+            
+            </div>
+            <button type="button" class=" addmore secondary-button" value="Insert above">Add new </button>
+
+
+        </fieldset>
+      
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save changes"/>
+        </div>
+        <a href="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}">Cancel</a>
+      {% else %}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save and continue"/>
+        </div>
+      {% endif %}
+      </form>
+    </div>
+  </div>
+  {% block page_scripts %}
+<script>
+$("table").on("click",".up,.down", function () {});
+
+$(".addmore").on('click',function(){
+  $("#sort").removeClass("hidden");
+	var data="<tr><td style='padding-top:30px; padding-left:10px;' class='govuk-table__cell'> <input  class=' form-control timeline-column-1'><br><br><button type='button' class='link' name='cmdDeleteRow'>Remove</button></td><td style='padding-top:30px; padding-left:10px;' class='govuk-table__cell'> <textarea style='width: 90%; padding-top:15px;' class='' name='' id='' value='' rows=''></textarea> </td>";
+    data+="<td  class='hidden cell' ><br><button type='button' class='up link'>Move up</button><br><br><button type='button' class='down link' >Move down</button></td> </tr>";
+  $('table').append(data);
+  $("tr:last").addClass("rowcolor")
+  $("tr:last").prev().removeClass("rowcolor")
+ 
+  
+  
+    $(".cell").removeClass("hidden");
+      $("#cell1").removeClass("hidden");
+      $("#cell2").removeClass("hidden");
+  
+  
+    $( ".rmv" ).removeClass("hidden")
+
+
+
+
+
+
+
+
+
+  $('button[name="cmdDeleteRow"]').on('click', function(){
+
+
+
+    if($('#sort2 tr').length <= 2) {    
+      $(".rmv").addClass("hidden");
+      $("#cell1").addClass("hidden");
+      $("#cell2").addClass("hidden");
+      $(".cell").addClass("hidden");
+    }
+    $(this).closest('tr').remove();
+
+    $("#error1").addClass("hidden");
+
+    $("#error2").addClass("hidden");
+
+
+
+})
+});
+
+
+$("table").on("click",".up,.down", function () {
+  var row = $(this).parents("tr:first");
+  if($(this).is('.up')){
+    row.insertBefore(row.prev());
+  }
+  else{
+    row.insertAfter(row.next());
+  }
+
+ 
+
+ 
+});
+
+$("table").on('click',".up:first", function(){
+  $("#error1").removeClass("hidden");
+})
+$("table").on('click',".up:last", function(){
+  $("#error2").addClass("hidden");
+})
+
+$("table").on('click',".down:last", function(){
+  $("#error2").removeClass("hidden");
+})
+
+$("table").on('click',".down:first", function(){
+  $("#error1").addClass("hidden");
+})
+
+
+
+  </script>
+
+{% endblock %}
+
+{% include 'prototypes/prototype-oct-2019/includes/contact.html' %}
+</main>
+{% endblock %}
+

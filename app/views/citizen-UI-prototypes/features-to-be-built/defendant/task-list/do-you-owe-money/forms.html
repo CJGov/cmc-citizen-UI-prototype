@@ -1,0 +1,211 @@
+{% extends "layout.html" %}
+{% block page_title %}
+Money Claims Prototype
+{% endblock %}
+{% block content %}
+<main id="content" role="main">
+  {% include "includes/phase_banner_beta.html" %}
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <a href="#" class="link-back">Back</a>
+      <h1 class="heading-large">Reject all of the claim and counterclaim</h1>
+      <p>You have chosen to counterclaim. This means your defence cannot continue online. Follow these steps to download, complete and return form N9B. You must pay a court fee. Do not create a new claim.</p>
+      <p class="panel panel-border-wide">We must receive your completed form before 4pm on 17 November 2021. The claim against you will continue if we do not receive this.</p>
+      <h3 class="heading-medium">How to counterclaim</h3>
+
+      {% if data.radio_select_group=="all" or data['handoffs'] == 1 %}
+      <ul class="list list-number">
+        <li>
+          Download the <span class="bold">admission form.</span>
+
+      </li>
+      <li>Print and complete the form.</li>
+      <li>Post the form to:</li>
+    </ul>
+
+ <ul class="panel">
+  <li>HMCTS CMC</li>
+  <li>PO Box 12747</li>
+  <li>Harlow</li>
+  <li>CM20 9RA</li>
+
+</ul>
+
+<p>You can also email completed forms to contactocmc@justice.gov.uk</p>
+
+           <h3 class="heading-medium">Download and complete the form</h3>
+      <ul class="list"><!--{{ asset_path }}/images/OCON9A.pdf class="download" download="download" -->
+              <li> <a target="_blank" href='{{ asset_path }}/images/OCON9A.pdf'>Download admission form (PDF, 102 KB) (opens in new tab)</a>.</li>
+
+      </ul>
+      <p>Use these details when completing the form:</p>
+
+      <ul class="list list-bullet">
+        <li>Claim number: 000MC023</li>
+        <li>Claimant: Jan Clark</li>
+        <li>Defendant: Mary Richards</li>
+      </ul>
+    {% elseif data.radio_select_group=="amount_less_claimed" or data.radio_select_group=="Some" or data['handoffs'] == 2 or data['handoffs'] == 3%}
+    <ul class="list list-number">
+      <li>
+        Download the <span class="bold">admission form</span> and the <span class="bold">defence form.</span>
+
+    </li>
+    <li>Print and complete the forms (ignore section 4 of the defence form unless you're making a counterclaim).</li>
+    <li>Post the forms to:</li>
+  </ul>
+
+ <ul class="panel">
+  <li>HMCTS CMC</li>
+  <li>PO Box 12747</li>
+  <li>Harlow</li>
+  <li>CM20 9RA</li>
+
+</ul>
+
+<p>You can also email completed forms to contactocmc@justice.gov.uk</p>
+
+
+           <h3 class="heading-medium">Download and complete the forms</h3>
+      <ul class="list">
+              <li> <a target="_blank" class="download" download="download" href='{{ asset_path }}/images/OCON9A.pdf'>Download admission form (PDF, 102 KB) (opens in new tab)</a> .</li>
+              <li> <a target="_blank" class="download" download="download" href='{{ asset_path }}/images/OCON9B.pdf'>Download defence form (PDF, 76 KB) (opens in new tab)</a> .</li>
+
+      </ul>
+      <p>Use these details when completing the forms:</p>
+
+      <ul class="list list-bullet">
+        <li>Claim number: 000MC023</li>
+        <li>Claimant: Jan Clark</li>
+        <li>Defendant: Mary Richards</li>
+      </ul>
+  {% elseif data.radio_select_group=="defend_now_cc" or data['handoffs'] == 4%}
+  
+  <h3 class="bold">Step 1: Download and complete form N9B</h3>
+  
+  <p></p>
+  <p><a href="https://www.gov.uk/government/publications/form-n9b-defence-counterclaim-specified-amount" target="_blank">Download form N9B Make a defence or counterclaim (opens in new tab)</a></p>
+      
+<p></p>
+<p>You will need these claim details:</p>
+<ul class=""><li>Claim number: 000MC023</li><li></li>Claimant: Jan Clark</li><li>Defendant: Mary Richards</li></ul>
+
+<p></p>
+<h3 class="bold">Step 2: Email or post form N9B</h3>
+<p></p>
+<p>Email completed form N9B to: <a href="mailto:contactocmc@justice.gov.uk">contactocmc@justice.gov.uk</a></p>
+
+<p>Or, you can send the form by post to:</p>
+
+<ul class="panel">
+  <li>HMCTS CMC</li>
+  <li>PO Box 12747</li>
+  <li>Harlow</li>
+  <li>CM20 9RA</li>
+
+</ul>
+
+<h3 class="bold">Step 3: Pay the court fee</h3>
+<p></p>
+<p>You'll need to pay a court fee to make a counterclaim. The court will contact you to take payment.</p>
+
+
+  
+  <details role="group">
+    <summary role="button" aria-controls="details-content-0" aria-expanded="false">View court fees</summary>
+    <div class="panel" id="details-content-0" aria-hidden="true">
+      <p>The fee is based on the amount you're claiming, including interest.
+      </p>
+      <table class="expandable-demo">
+        <thead>
+          <tr>
+            <th scope="col">Claim amount</th>
+            <th scope="col">Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£0.01 to £300</li>
+              </ul>
+            </td>
+            <td>£35</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£300.01 to £500</li>
+              </ul>
+            </td>
+            <td>£50</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£500.01 to £1,000</li>
+              </ul>
+            </td>
+            <td>£70</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£1,000.01 to £1,500</li>
+              </ul>
+            </td>
+            <td>£80</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£1,500.01 to £3,000</li>
+              </ul>
+            </td>
+            <td>£115</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£3,000.01 to £5,000</li>
+              </ul>
+            </td>
+            <td>£205</td>
+          </tr>
+          <tr>
+            <td>
+              <ul class="list">
+                <li>£5,000.01 to £10,000</li>
+              </ul>
+            </td>
+            <td>£455</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+
+  <p class="panel panel-border-wide">Do not create a new claim if you want to counterclaim. Use form N9B.</p>
+{% endif %}
+
+
+<h2 class="heading-medium" style="margin-bottom: 10px;">Help and support</h2>
+
+{% import 'prototypes/features-to-be-built/includes/contact-in-page.html' as contact %}
+{{ contact.output('small') }}
+
+<br>
+</div>
+</div>
+</main>
+<form method="post"  action="#" class="for4" style=" float: left;">
+  <select id="dashboard2" name="dashboard2" onchange="window.location.href='forms?handoffs='+this.value">
+    <option  value="0" >Views</option>
+    <option value="1" {% if data['handoffs'] == 1 %}selected{% endif %}>1. I admit all</option>
+    <option value="2" {% if data['handoffs'] == 2 %}selected{% endif %}>2.I admit part of the claim </option>
+    <option value="3" {% if data['handoffs'] == 3 %}selected{% endif %}>3. I owe less than the amount claimed </option>
+    <option value="4" {% if data['handoffs'] == 4 %}selected{% endif %}>4.I dispute and counterclaim </option>
+  </select>
+</form>
+{% endblock %}
