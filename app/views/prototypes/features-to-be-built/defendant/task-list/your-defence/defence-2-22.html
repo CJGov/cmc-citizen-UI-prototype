@@ -1,0 +1,233 @@
+{% extends "layout_task-list.html" %}
+{% block page_title %}
+Money Claims Prototype
+{% endblock %}
+{% block home_link %} ../../task-list {% endblock %}
+{% block proposition_header %}
+{% set my_account="1" %}
+
+{% include "includes/propositional_navigation.html" %}
+{% endblock %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<main id="content" role="main">
+  {% include "includes/phase_banner_beta.html" %}
+  <div class="grid-row">
+    <div class="column-full-width">
+      <!--  <a href="#" onclick="history.go(-1)" class="link-back">Back</a>  -->
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+       <form method="post" action="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}" class="form">
+        {% else %}
+      <form method="post" action="defence-3" class="form">
+        {% endif %}
+        {{formData | safe}}
+
+      <h1 class="heading-large">Add your timeline of events </h1>
+
+
+      <div class="description-block">
+        <h3 class="heading-small">Their timeline</h3>
+        <div class="form-fields">
+          <table>
+            <thead>
+            <!--    <tr>
+                <th scope="col">Date</th>
+                <th scope="col">What happened</th>
+              </tr> -->
+            </thead>
+            <tbody>
+            <!--  <tr>
+                <td>03/11/2017</td>
+                <td>I contacted {% if data.counterclaim=="true" %}Jan Clark{%else%}Mary Richards{% endif %} to discuss building works on our roof.</td>
+              </tr>
+              <tr>
+                <td>06/11/2017</td>
+                <td>We agreed what work should be done and signed a contract.</td>
+              </tr>
+              <tr>
+                <td>30/11/2017</td>
+                <td>The work started on the roof.</td>
+              </tr>
+              <tr class="show-more">
+                <td>21/12/2017</td>
+                <td>The work on the roof was completed but I noticed that there was a problem with one
+                section</a>.
+              </td>
+            </tr>
+            <tr  class="show-more">
+              <td>27/12/2017</td>
+              <td>I sent an email to Mary Richards and asked them to get the problem fixed.</td>
+            </tr>
+            <tr class="show-more">
+              <td>15/01/2018</td>
+              <td>I hadn't had a reply so I told them I would be making a money claim.</td>
+            </tr>
+          <tr class="show-more">
+            <td >27/12/2017</td>
+            <td>I sent an email to Mary Richards and asked them to get the problem fixed.</td>
+          </tr>
+          <tr class="show-more">
+            <td>15/01/2018</td>
+            <td>I hadn't had a reply so I told them I would be making a money claim.</td>
+          </tr>
+          <tr >
+            <td class="no-border">
+              <a href="#" class="toggle">Show more</a>
+              <a href="#" class="toggle" style="display: none">Show less</a>
+            </td>
+            <td class="no-border"></td>
+          </tr> -->
+          <tr >
+            <td class="no-border">
+              <a href="#" class="toggle">Download and view their Timeline</a>
+            </td>
+            <td class="no-border"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div style="padding-top: 30px;"></div>
+  <!-- ROC-5498 -->
+
+  <h3 class="heading-small">Add your timeline of events (optional)</h3>
+  <p>Include dates if you know them.</p>
+
+        <fieldset>
+          <legend class="visuallyhidden">
+            Explain what happened
+          </legend>
+          <table id="sort" class="govuk-table">
+
+        <thead>
+            <tr class="govuk-table__row">
+
+              <th scope="col" class="govuk-table__header" aria-sort="ascending"> Date
+
+              <span class="form-hint">For example, March 2021 </span></th>
+
+              <th scope="col" class="govuk-table__header" aria-sort="none"> What happened
+
+              <span class="form-hint">For example, you might have signed a contract</span></th>
+
+              <th scope="col" class="govuk-table__header " aria-sort="none">Actions
+                <span class="form-hint"> </span>
+
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+              <tr  id="tr_clone" class="  govuk-table__row">
+
+              <td style="padding-top:30px; padding-left:10px;" class=" govuk-table__cell "> <input  class=" form-control timeline-column-1" type="text" id="date-form-control"
+                name="cd-date-1" value="{{data['cd-date-1']}}" onfocus=>
+               <br><br>
+                <button type="button" class="link" name="cmdDeleteRow">Remove</button>
+                </td>
+
+
+
+                <td class="govuk-table__cell " data-sort-value="1568847600000"> <div style="padding-top:15px;" class="form-group"><textarea style="width: 90%; padding-top:15px;"
+                  class="timeline-column-text" name="cd-timeline-1" id="timeline-1" value="{{data['cd-timeline-1']}}"
+                  rows="2">{{data['cd-timeline-1']}}</textarea></div> </td>
+
+                <td class="govuk-table__cell " data-sort-value="59">
+                  <ol style="padding-top: 15px;">
+
+                    <li><button id="up" type="button" value="move up " class="link up">Move up</button></li>
+
+                    <br>
+                    <li> <button id="down" type="button" value="move down " class="link down" >Move down</button></li>
+                  </ol>
+                </td>
+
+              </tr>
+            </tbody>
+
+
+
+
+
+
+            </table>
+
+            <button type="button" class=" addmore secondary-button" value="Insert above">Add new </button>
+
+
+        </fieldset>
+
+        <div class="grid-row">
+          <div class="column-two-thirds" id="claim-details">
+            <div id="describe-wrapper-claim-details-1" class="form-group">
+              <label class="form-label-bold" for="offer">
+                <h3 class="heading-small">Add any comments about their timeline (optional)</h3>
+              </label>
+              <textarea class="form-control form-control-3-4 form-control-medium"
+              id="defence-disagree-timeline"
+              rows="4"
+              name="defence-disagree-timeline"
+              cols="20"
+              type="text"
+              style="width: 95%"
+              data-store="">{{data['defence-disagree-timeline']}}</textarea>
+            </div>
+          </div>
+        </div>
+
+      {% if data.return_page and data.return_page.includes('check-and-send') or data.return_page and data.return_page.includes('check-your-answers')%}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save changes"/>
+        </div>
+        <a href="{{ data.return_page if data.return_page | length > 0 else '../task-list' }}">Cancel</a>
+      {% else %}
+        <div class="form-group">
+          <input type="submit" class="button" value="Save and continue"/>
+        </div>
+      {% endif %}
+      </form>
+    </div>
+  </div>
+  {% block page_scripts %}
+<script>
+$("#sort").on("click",".up,.down", function () {});
+
+$(".addmore").on('click',function(){
+
+	var data="<tr><td style='padding-top:30px; padding-left:10px;' class='govuk-table__cell'> <input  class=' form-control timeline-column-1'><br><br><button type='button' class='link' name='cmdDeleteRow'>Remove</button></td><td style='padding-top:30px; padding-left:10px;' class='govuk-table__cell'> <textarea style='width: 90%; padding-top:15px;' class='' name='' id='' value='' rows=''></textarea> </td>";
+    data+="<td><br><button type='button' class='up link'>Move up</button><br><br><button type='button' class='down link' >Move down</button></td> </tr>";
+  $('#sort').append(data);
+  $("tr:last").addClass("rowcolor")
+  $("tr:last").prev().removeClass("rowcolor")
+
+  $('button[name="cmdDeleteRow"]').on('click', function(){
+$(this).closest('tr').remove()
+})
+});
+
+
+
+
+$("#sort").on("click",".up,.down", function () {
+  var row = $(this).parents("tr:first");
+  if($(this).is('.up')){
+    row.insertBefore(row.prev());
+  }
+  else{
+    row.insertAfter(row.next());
+  }
+});
+
+
+
+
+
+  </script>
+
+{% endblock %}
+
+{% include 'prototypes/prototype-oct-2019/includes/contact.html' %}
+</main>
+{% endblock %}
